@@ -18,6 +18,11 @@ TextField {
     -fx-border-color: #3BBFA7;
 }
 
+ScrollPane {
+    -fx-background-color: #fff;
+    -fx-border-style: none;
+}
+
 #mainPane {
     -fx-background-color: #fff;
 }
@@ -36,4 +41,8 @@ TextField {
     -fx-border-width: 2px;
     -fx-border-color: #3BBFA7;
     -fx-background-color: #fff;
+}
+
+.taskPane {
+    -fx-background-color: red;
 }
