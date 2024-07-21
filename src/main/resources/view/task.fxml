@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0" styleClass="taskItem" stylesheets="@/css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.TaskController">
+   <children>
+      <Label fx:id="text" text="Label" />
+      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+      <CheckBox mnemonicParsing="false" />
+   </children>
+   <padding>
+      <Insets left="20.0" right="20.0" />
+   </padding>
+</HBox>

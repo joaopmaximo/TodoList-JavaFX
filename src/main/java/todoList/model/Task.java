@@ -1,9 +1,12 @@
-package todoList;
+package todoList.model;
 
-public class task {
+public class Task {
     private String text;
 
-    public task (String text) {
+    public Task() {
+    }
+
+    public Task (String text) {
         this.text = text;
     }
     

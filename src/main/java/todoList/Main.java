@@ -15,14 +15,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/todoList/main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
             Parent root = loader.load(); // root node, required by scene
             Scene scene = new Scene(root); // scene, required by stage
             String css = getClass().getResource("/css/styles.css").toExternalForm();
             scene.getStylesheets().add(css);
             Image icon = new Image("/img/lista.png");
     
-            stage.setTitle("todoListToDo");
+            stage.setTitle("Jeyp ToDo List");
             stage.getIcons().add(icon);
             stage.setScene(scene);
             stage.setResizable(false);

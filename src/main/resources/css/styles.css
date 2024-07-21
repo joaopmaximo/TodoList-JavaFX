@@ -3,6 +3,11 @@
     src: url('../font/oswald.ttf');
 }
 
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('../font/roboto-condensed.ttf');
+}
+
 Button {
     -fx-background-color: #3BBFA7;
     -fx-text-fill: #fff;
@@ -13,14 +18,14 @@ Button {
 }
 
 TextField {
-    -fx-background-color: #fff;
+    -fx-background-color: transparent;
     -fx-border-width: 2px;
     -fx-border-color: #3BBFA7;
+    -fx-font-size: 16px;
 }
 
 ScrollPane {
-    -fx-background-color: #fff;
-    -fx-border-style: none;
+    -fx-background-color: transparent;
 }
 
 #mainPane {
@@ -37,12 +42,10 @@ ScrollPane {
     -fx-padding: 0 0;
 }
 
-.task {
+.taskItem {
     -fx-border-width: 2px;
     -fx-border-color: #3BBFA7;
-    -fx-background-color: #fff;
-}
-
-.taskPane {
-    -fx-background-color: red;
+    -fx-background-color: transparent;
+    -fx-font-size: 16px;
+    -fx-font-family: "Roboto Condensed";
 }
