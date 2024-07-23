@@ -1,8 +1,5 @@
 package todoList.controller;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
@@ -24,7 +21,7 @@ public class MainController {
     @FXML
     private TextField newTaskField;
 
-    public void getTasks() throws FileNotFoundException {
+    /* public void getTasks() throws FileNotFoundException {
         FileReader fileReader = new FileReader("tasks.txt");
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
@@ -45,9 +42,13 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    } */
 
     public void addTask() {
+        if (newTaskField.getText().isBlank()) {
+            return;
+        }
+
         try {
             Task task = new Task(newTaskField.getText());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/task.fxml"));
