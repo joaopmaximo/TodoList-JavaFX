@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-// import todoList.controller.MainController;
+import todoList.controller.MainController;
 
 public class Main extends Application {
     public static void main(String[] args) {
@@ -22,8 +22,8 @@ public class Main extends Application {
             String css = getClass().getResource("/css/styles.css").toExternalForm();
             scene.getStylesheets().add(css);
             Image icon = new Image("/img/lista.png");
-            // MainController mainController = loader.getController();
-            // mainController.getTasks();
+            MainController mainController = loader.getController();
+            mainController.getTasks();
 
             stage.setTitle("Jeyp ToDo List");
             stage.getIcons().add(icon);
