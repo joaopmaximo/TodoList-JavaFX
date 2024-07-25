@@ -28,6 +28,10 @@ ScrollPane {
     -fx-background-color: transparent;
 }
 
+ScrollPane > .viewport {
+    -fx-background-color: transparent;
+}
+
 #mainPane {
     -fx-background-color: #fff;
 }

@@ -21,6 +21,8 @@ import todoList.util.Util;
 
 public class MainController {
 
+    static public JSONArray taskListJson;
+
     @FXML
     private Pane mainPane;
 
@@ -34,28 +36,27 @@ public class MainController {
     public void getTasks() {
         File file = new File("tasks.json");
 
-        if (Util.isFileEmptyOrNoExists(file)) {
-            return;
-        }
-
         try {
+            if (Util.isFileEmptyOrNoExists(file)) {
+                taskListJson = new JSONArray();
+                file.createNewFile();
+                return;
+            }
+            
             // get the content from the json file and put in a jsonArray
             Path path = Paths.get("tasks.json");
             String fileContent = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
-            JSONArray tasksListJson = new JSONArray(fileContent);
+            taskListJson = new JSONArray(fileContent);
 
             // for each jsonObject in the jsonArray, create a task in the application using
             // the FXML file
-            for (int i = 0; i < tasksListJson.length(); i++) {
-                JSONObject taskJson = new JSONObject(tasksListJson.getJSONObject(i).toMap());
+            for (int i = 0; i < taskListJson.length(); i++) {
+                JSONObject taskJson = new JSONObject(taskListJson.getJSONObject(i).toMap());
                 Task task = new Task(taskJson.getString("content"), taskJson.getBoolean("checked"));
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/task.fxml"));
-                HBox taskItem = loader.load();
-                TaskController taskController = loader.getController();
-                taskController.setData(task);
-                taskList.getChildren().add(taskItem);
+                addItemToTaskList(task);
             }
         } catch (IOException e) {
+            e.printStackTrace();
             return;
         }
     }
@@ -72,18 +73,22 @@ public class MainController {
         // will be saved into a json file
         try {
             Task task = new Task(newTaskField.getText());
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/task.fxml"));
-            HBox taskItem = loader.load();
-            TaskController taskController = loader.getController();
-            taskController.setData(task);
-            taskController.saveTask(task);
-            taskList.getChildren().add(taskItem);
+            addItemToTaskList(task);
+            TaskController.saveTask(task);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // cleans the textField for the next input
         newTaskField.clear();
+    }
+
+    public void addItemToTaskList(Task task) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/task.fxml"));
+        HBox taskItem = loader.load();
+        TaskController taskController = loader.getController();
+        taskController.setData(task);
+        taskList.getChildren().add(taskItem);
     }
 
 }
