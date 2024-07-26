@@ -1,6 +1,5 @@
 package todoList.controller;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import todoList.model.Task;
+import todoList.util.Util;
 
 public class TaskController {
 
@@ -40,8 +40,7 @@ public class TaskController {
     }
 
     public static void updateTaskJsonFile() throws JSONException, IOException {
-        File file = new File("tasks.json");
-        FileWriter fileWriter = new FileWriter(file, StandardCharsets.UTF_8);
+        FileWriter fileWriter = new FileWriter(Util.file, StandardCharsets.UTF_8);
         fileWriter.write(MainController.taskListJson.toString(4));
         fileWriter.close();
     }

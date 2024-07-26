@@ -5,8 +5,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Util {
+    public static String appData = System.getenv("APPDATA");
+    public static Path path = Paths.get(Util.appData, "TodoList", "tasks.json");
+    public static File file = new File(Util.appData + "/TodoList/tasks.json");
+
     public static Boolean isFileEmptyOrNoExists(File file) {
         try {
             FileReader fileReader = new FileReader(file);
@@ -34,4 +40,5 @@ public class Util {
 
         return false;
     }
+
 }

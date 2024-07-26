@@ -2,3 +2,6 @@ main-dev.fxml
 target/
 .vscode
 tasks.json
+dependency-reduced-pom.xml
+*.exe
+runtime/

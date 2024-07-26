@@ -1,11 +1,8 @@
 package todoList.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,18 +31,16 @@ public class MainController {
 
     // get all the persisted tasks in the json file to the app
     public void getTasks() {
-        File file = new File("tasks.json");
-
         try {
-            if (Util.isFileEmptyOrNoExists(file)) {
+            if (Util.isFileEmptyOrNoExists(Util.file)) {
                 taskListJson = new JSONArray();
-                file.createNewFile();
+                Files.createDirectories(Util.path.getParent());
+                Util.file.createNewFile();
                 return;
             }
-            
+
             // get the content from the json file and put in a jsonArray
-            Path path = Paths.get("tasks.json");
-            String fileContent = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+            String fileContent = new String(Files.readAllBytes(Util.path), StandardCharsets.UTF_8);
             taskListJson = new JSONArray(fileContent);
 
             // for each jsonObject in the jsonArray, create a task in the application using
