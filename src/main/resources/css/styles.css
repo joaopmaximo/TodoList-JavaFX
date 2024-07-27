@@ -32,6 +32,20 @@ ScrollPane > .viewport {
     -fx-background-color: transparent;
 }
 
+CheckBox .box {
+    -fx-background-color: #fff;
+    -fx-border-color: #3BBFA7;
+    -fx-border-width: 2px;
+}
+
+CheckBox:selected .mark {
+    -fx-background-color: #fff;
+}
+
+CheckBox:selected .box {
+    -fx-background-color: #3BBFA7;
+}
+
 #mainPane {
     -fx-background-color: #fff;
 }
@@ -49,7 +63,16 @@ ScrollPane > .viewport {
 .taskItem {
     -fx-border-width: 2px;
     -fx-border-color: #3BBFA7;
+    -fx-border-radius: 5px;
     -fx-background-color: transparent;
     -fx-font-size: 16px;
     -fx-font-family: "Roboto Condensed";
+}
+
+.clickable {
+    -fx-cursor: hand;
+}
+
+.traced .text {
+    -fx-strikethrough: true;
 }

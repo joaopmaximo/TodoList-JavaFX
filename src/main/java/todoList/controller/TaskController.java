@@ -1,24 +1,29 @@
 package todoList.controller;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import todoList.model.Task;
 import todoList.util.Util;
 
 public class TaskController {
+
+    private MainController mainController;
 
     @FXML
     private Label taskContent;
 
     @FXML
     private CheckBox checkedBox;
+
+    @FXML
+    private ImageView deleteIcon;
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
 
     // fill the FXML task template with the task data
     public void setData(Task task) {
@@ -29,39 +34,39 @@ public class TaskController {
         }
     }
 
-    // saves the task in a json file, it uses the library org.json
-    public static void saveTask(Task task) throws IOException {
-        JSONObject taskJson = new JSONObject();
-        taskJson.put("content", task.getContent());
-        taskJson.put("checked", task.getChecked());
+    public void deleteTask() throws IOException {
+        // finding the task by the content
+        int i = 0;
+        while (taskContent.getText() != Util.taskListJson.getJSONObject(i).get("content")) {
+            i++;
+        }
 
-        MainController.taskListJson.put(taskJson);
-        updateTaskJsonFile();
-    }
+        // removing the task from the list, either json file and application ui
+        Util.taskListJson.remove(i);
+        mainController.deleteItemFromTaskList(i);
 
-    public static void updateTaskJsonFile() throws JSONException, IOException {
-        FileWriter fileWriter = new FileWriter(Util.file, StandardCharsets.UTF_8);
-        fileWriter.write(MainController.taskListJson.toString(4));
-        fileWriter.close();
+        // saving the list with the updated task to the json file
+        Util.updateTaskJsonFile();
     }
 
     public void toggleChecked() throws IOException {
+        if (checkedBox.isSelected()) {
+            taskContent.getStyleClass().add("traced");
+        } else {
+            taskContent.getStyleClass().remove("traced");
+        }
 
-        JSONObject taskJson = new JSONObject();
-        taskJson.put("content", taskContent.getText());
-        taskJson.put("checked", checkedBox.isSelected());
-
+        // finding the task by the content
         int i = 0;
-
-        while (taskContent.getText() != MainController.taskListJson.getJSONObject(i).get("content")) {
+        while (taskContent.getText() != Util.taskListJson.getJSONObject(i).get("content")) {
             i++;
         }
 
         // updating the checked attribute from the found task
-        MainController.taskListJson.getJSONObject(i).put("checked", checkedBox.isSelected());
+        Util.taskListJson.getJSONObject(i).put("checked", checkedBox.isSelected());
 
         // saving the list with the updated task to the json file
-        updateTaskJsonFile();
+        Util.updateTaskJsonFile();
     }
 
 }
