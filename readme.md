@@ -18,5 +18,5 @@ mvn package
 Finally use Jpackage to create the installer
 
 ```console
-jpackage --main-jar TodoList-1.0.jar --runtime-image runtime/ --name TodoList --input target/ --icon src/main/resources/img/lista.ico
+jpackage --main-jar TodoList-2.0.jar --runtime-image runtime/ --name TodoList --input target/ --icon src/main/resources/img/lista.ico --win-menu --win-shortcut
 ```
