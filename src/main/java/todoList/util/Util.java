@@ -20,6 +20,11 @@ public class Util {
 
     public static Boolean isFileEmptyOrNoExists(File file) {
         try {
+            if (!file.exists()) {
+                createTaskJsonFile();
+                return true;
+            }
+
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
@@ -34,10 +39,6 @@ public class Util {
             fileReader.close();
 
             // if the file doesnt exist, creates a new one
-            if (!file.exists()) {
-                createTaskJsonFile();
-                return true;
-            }
 
             return false;
         } catch (IOException e) {
