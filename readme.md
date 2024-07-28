@@ -1,5 +1,7 @@
 # TodoList with JavaFX
 
+![TodoList App](/src/main/resources/img/todo-print.png?raw=true "TodoList")
+
 ## How to distribute the application using Jpackage
 
 Create a runtime image, ensure that JavaFX modules are included
