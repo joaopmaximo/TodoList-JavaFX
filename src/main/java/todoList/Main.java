@@ -5,7 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import todoList.controller.MainController;
 
 public class Main extends Application {
@@ -19,8 +21,14 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
             Parent root = loader.load(); // root node, required by scene
             Scene scene = new Scene(root); // scene, required by stage
-            String css = getClass().getResource("/css/styles.css").toExternalForm();
-            scene.getStylesheets().add(css);
+
+            String stylesCss = getClass().getResource("/css/styles.css").toExternalForm();
+            String darkModeCss = getClass().getResource("/css/dark-mode.css").toExternalForm();
+
+            scene.getStylesheets().add(stylesCss);
+            scene.getStylesheets().add(darkModeCss);
+            scene.setFill(Color.TRANSPARENT);
+            
             Image icon = new Image("/img/lista.png");
             MainController mainController = loader.getController();
             mainController.getTasks();
@@ -29,6 +37,7 @@ public class Main extends Application {
             stage.getIcons().add(icon);
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.initStyle(StageStyle.TRANSPARENT);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

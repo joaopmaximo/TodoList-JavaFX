@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" prefWidth="400.0" spacing="14.0" styleClass="taskItem" stylesheets="@/css/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.TaskController">
+<HBox alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" prefWidth="400.0" spacing="14.0" styleClass="taskItem" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.TaskController">
    <children>
       <Label fx:id="taskContent" prefWidth="260.0" text="Tarefa" wrapText="true" HBox.hgrow="ALWAYS">
          <HBox.margin>
@@ -15,11 +14,7 @@
          </HBox.margin>
       </Label>
       <CheckBox fx:id="checkedBox" mnemonicParsing="false" onAction="#toggleChecked" styleClass="clickable" />
-      <ImageView fx:id="deleteIcon" fitWidth="25.0" onMouseClicked="#deleteTask" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
-         <image>
-            <Image url="@/img/trash.png" />
-         </image>
-      </ImageView>
+      <Button id="deleteButton" mnemonicParsing="false" text="X" onAction="#deleteTask" />
    </children>
    <padding>
       <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />

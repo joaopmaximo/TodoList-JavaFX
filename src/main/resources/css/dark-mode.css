@@ -1,0 +1,11 @@
+Label {
+    -fx-text-fill: #fff;
+}
+
+TextField {
+    -fx-text-fill: #fff;
+}
+
+#mainPane {
+    -fx-background-color: #202020;
+}

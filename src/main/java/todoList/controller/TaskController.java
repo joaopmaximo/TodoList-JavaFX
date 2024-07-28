@@ -4,7 +4,6 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import todoList.model.Task;
 import todoList.util.Util;
 
@@ -18,9 +17,6 @@ public class TaskController {
     @FXML
     private CheckBox checkedBox;
 
-    @FXML
-    private ImageView deleteIcon;
-
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
@@ -31,6 +27,7 @@ public class TaskController {
 
         if (task.getChecked()) {
             checkedBox.setSelected(true);
+            taskContent.getStyleClass().add("traced");
         }
     }
 

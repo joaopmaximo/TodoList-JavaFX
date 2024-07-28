@@ -8,17 +8,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import todoList.model.Task;
 import todoList.util.Util;
 
 public class MainController {
 
+    private double mouseX = 0;
+    private double mouseY = 0;
+
     @FXML
-    private Pane mainPane;
+    private BorderPane mainPane;
 
     @FXML
     private VBox taskList;
@@ -104,6 +110,39 @@ public class MainController {
 
     public void deleteItemFromTaskList(int index) {
         taskList.getChildren().remove(index);
+    }
+
+    public void switchMode() {
+        Scene scene =  mainPane.getScene();
+        String darkModeCss = getClass().getResource("/css/dark-mode.css").toExternalForm();
+        
+        if(scene.getStylesheets().size() > 1) {
+            scene.getStylesheets().remove(darkModeCss);
+            return;
+        }
+        
+        scene.getStylesheets().add(darkModeCss);
+    }
+
+    public void closeProgram() {
+        Stage stage = (Stage) mainPane.getScene().getWindow();
+        stage.close();
+    }
+
+    public void minimizeProgram() {
+        Stage stage = (Stage) mainPane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    public void getMouseLocation(MouseEvent e) {
+        mouseX = e.getSceneX();
+        mouseY = e.getSceneY();
+    }
+
+    public void moveWindow(MouseEvent e) {
+        Stage stage = (Stage) mainPane.getScene().getWindow();
+        stage.setX(e.getScreenX() - mouseX);
+        stage.setY(e.getScreenY() - mouseY);
     }
 
 }
