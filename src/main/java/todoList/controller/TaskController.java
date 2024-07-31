@@ -4,12 +4,16 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import todoList.model.Task;
 import todoList.util.Util;
 
 public class TaskController {
 
     private MainController mainController;
+
+    @FXML
+    private HBox taskItem;
 
     @FXML
     private Label taskContent;
@@ -27,7 +31,7 @@ public class TaskController {
 
         if (task.getChecked()) {
             checkedBox.setSelected(true);
-            taskContent.getStyleClass().add("disabled");
+            taskItem.getStyleClass().add("disabled");
         }
     }
 
@@ -48,9 +52,9 @@ public class TaskController {
 
     public void toggleChecked() throws IOException {
         if (checkedBox.isSelected()) {
-            taskContent.getStyleClass().add("disabled");
+            taskItem.getStyleClass().add("disabled");
         } else {
-            taskContent.getStyleClass().remove("disabled");
+            taskItem.getStyleClass().remove("disabled");
         }
 
         // finding the task by the content
