@@ -27,7 +27,7 @@ public class TaskController {
 
         if (task.getChecked()) {
             checkedBox.setSelected(true);
-            taskContent.getStyleClass().add("traced");
+            taskContent.getStyleClass().add("disabled");
         }
     }
 
@@ -48,9 +48,9 @@ public class TaskController {
 
     public void toggleChecked() throws IOException {
         if (checkedBox.isSelected()) {
-            taskContent.getStyleClass().add("traced");
+            taskContent.getStyleClass().add("disabled");
         } else {
-            taskContent.getStyleClass().remove("traced");
+            taskContent.getStyleClass().remove("disabled");
         }
 
         // finding the task by the content
