@@ -38,8 +38,6 @@ public class Util {
             bufferedReader.close();
             fileReader.close();
 
-            // if the file doesnt exist, creates a new one
-
             return false;
         } catch (IOException e) {
             return true;
