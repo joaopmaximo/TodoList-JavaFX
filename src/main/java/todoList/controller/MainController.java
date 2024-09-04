@@ -32,6 +32,10 @@ public class MainController {
     @FXML
     private TextField newTaskField;
 
+    public void showConfig() {
+        System.out.println("testee");
+    }
+
     // get all the persisted tasks in the json file to the app
     public void getTasks() {
         try {

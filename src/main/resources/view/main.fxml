@@ -36,7 +36,7 @@
                         <Image url="@/img/contrast.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="switchModeButton1" fitHeight="71.0" fitWidth="40.0" onMouseClicked="#switchMode" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
+                  <ImageView fx:id="configButton" fitHeight="71.0" fitWidth="40.0" onMouseClicked="#showConfig" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
                      <image>
                         <Image url="@/img/folder-gear.png" />
                      </image>
