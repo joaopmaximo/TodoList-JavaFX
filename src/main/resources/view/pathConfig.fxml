@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="mainPane" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.MainController">
+   <center>
+      <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets bottom="30.0" top="30.0" />
+         </BorderPane.margin>
+         <children>
+            <Button mnemonicParsing="false" text="Button" />
+            <TextField fx:id="pathConfigField" />
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <HBox id="topBar" alignment="CENTER_RIGHT" onMouseDragged="#moveWindow" onMousePressed="#getMouseLocation" prefHeight="30.0" styleClass="borderBar" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="minimizeButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#minimizeProgram" prefWidth="50.0" text="_" />
+            <Button fx:id="closeButton" layoutX="450.0" layoutY="10.0" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#closeProgram" prefWidth="50.0" text="X" />
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <HBox id="bottomBar" prefHeight="10.0" styleClass="borderBar" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <Pane prefWidth="5.0" styleClass="borderBar" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane prefWidth="5.0" styleClass="borderBar" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>
