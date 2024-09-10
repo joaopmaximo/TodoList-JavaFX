@@ -13,19 +13,78 @@ import java.nio.file.Paths;
 import org.json.JSONArray;
 
 public class Util {
-    static public JSONArray taskListJson;
-    public static String appData = System.getenv("APPDATA");
-    public static Path path = Paths.get(Util.appData, "TodoList", "tasks.json");
-    public static File file = new File(Util.appData + "/TodoList/tasks.json");
+    private static JSONArray taskListJson;
+    
+    public static void setTaskListJson(JSONArray taskListJson) {
+        Util.taskListJson = taskListJson;
+    }
 
-    public static Boolean isFileEmptyOrNoExists(File file) {
+    public static JSONArray getTaskListJson() {
+        return taskListJson;
+    }
+
+    private String appData = System.getenv("APPDATA");
+    private Path taskFilePath = Paths.get(appData, "TodoList", "tasks.json");
+    private File taskFile = new File(appData + "/TodoList/tasks.json");
+    private File pathConfigFile = new File("pathConfig.txt");
+
+    
+
+    public Util(String appData, Path taskFilePath, File taskFile, File pathConfigFile) {
+        this.appData = appData;
+        this.taskFilePath = taskFilePath;
+        this.taskFile = taskFile;
+        this.pathConfigFile = pathConfigFile;
+    }
+
+    public Boolean verifyPathConfigFile() {
+        
         try {
-            if (!file.exists()) {
+            if (!pathConfigFile.exists()) {
+                FileWriter fileWriter = new FileWriter(pathConfigFile);
+
+                pathConfigFile.createNewFile();
+
+                fileWriter.write(taskFile.getAbsolutePath());
+                fileWriter.close();
+
+                return true;
+            }
+
+            FileReader fileReader = new FileReader(taskFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            // if the file is empty, just return
+            if (bufferedReader.readLine() == null) {
+                FileWriter fileWriter = new FileWriter(pathConfigFile);
+
+                fileWriter.write(taskFile.getAbsolutePath());
+                fileWriter.close();
+                
+                bufferedReader.close();
+                fileReader.close();
+
+                return true;
+            }
+
+            bufferedReader.close();
+            fileReader.close();
+
+            return false;
+        } catch (IOException e) {
+            return true;
+        }
+
+    }
+
+    public Boolean verifyTaskFile() {
+        try {
+            if (!taskFile.exists()) {
                 createTaskJsonFile();
                 return true;
             }
 
-            FileReader fileReader = new FileReader(file);
+            FileReader fileReader = new FileReader(taskFile);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             // if the file is empty, just return
@@ -45,14 +104,14 @@ public class Util {
 
     }
 
-    public static void createTaskJsonFile() throws IOException {
-        Files.createDirectories(path.getParent());
-        file.createNewFile();
+    public void createTaskJsonFile() throws IOException {
+        Files.createDirectories(taskFilePath.getParent());
+        taskFile.createNewFile();
         return;
     }
 
-    public static void updateTaskJsonFile() throws IOException {
-        FileWriter fileWriter = new FileWriter(file, StandardCharsets.UTF_8);
+    public void updateTaskJsonFile() throws IOException {
+        FileWriter fileWriter = new FileWriter(taskFile, StandardCharsets.UTF_8);
         fileWriter.write(taskListJson.toString(4));
         fileWriter.close();
     }

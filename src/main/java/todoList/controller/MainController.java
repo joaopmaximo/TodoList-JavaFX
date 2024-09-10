@@ -36,12 +36,22 @@ public class MainController {
         System.out.println("testee");
     }
 
+    public void getTasksPath() {
+        try {
+            if (Util.verifyTaskFile()) {
+                Util.taskListJson = new JSONArray();
+                return;
+            }
+        } catch (Exception e) {
+        }
+    }
+
     // get all the persisted tasks in the json file to the app
     public void getTasks() {
         try {
 
-            if (Util.isFileEmptyOrNoExists(Util.file)) {
-                Util.taskListJson = new JSONArray();
+            if (Util.verifyTaskFile()) {
+                Util.setTaskListJson(new JSONArray());
                 return;
             }
 

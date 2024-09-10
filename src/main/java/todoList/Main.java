@@ -1,5 +1,7 @@
 package todoList;
 
+import org.json.JSONArray;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +20,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         try {
+            
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
             Parent root = loader.load(); // root node, required by scene
             Scene scene = new Scene(root); // scene, required by stage
@@ -31,6 +35,7 @@ public class Main extends Application {
             
             Image icon = new Image("/img/lista.png");
             MainController mainController = loader.getController();
+            mainController.getTasksPath();
             mainController.getTasks();
 
             stage.setTitle("Jeyp ToDo List");
