@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Util {
     private static JSONArray taskListJson;
@@ -23,18 +24,25 @@ public class Util {
         return taskListJson;
     }
 
+    public static void putTaskListJson(JSONObject taskJson) {
+        taskListJson.put(taskJson);
+    }
+
     private String appData = System.getenv("APPDATA");
     private Path taskFilePath = Paths.get(appData, "TodoList", "tasks.json");
-    private File taskFile = new File(appData + "/TodoList/tasks.json");
-    private File pathConfigFile = new File("pathConfig.txt");
+    private File pathConfigFile;
+    private File taskFile;
 
-    
+    public Util() {
+        this.pathConfigFile = new File("pathConfig.txt");
 
-    public Util(String appData, Path taskFilePath, File taskFile, File pathConfigFile) {
-        this.appData = appData;
-        this.taskFilePath = taskFilePath;
-        this.taskFile = taskFile;
-        this.pathConfigFile = pathConfigFile;
+        FileReader fileReader = new FileReader(pathConfigFile);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        if(!bufferedReader.readLine().isEmpty()) {
+            this.taskFile = new File(bufferedReader.readLine());
+        }
+
     }
 
     public Boolean verifyPathConfigFile() {

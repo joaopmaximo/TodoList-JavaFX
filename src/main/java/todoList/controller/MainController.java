@@ -109,7 +109,7 @@ public class MainController {
         taskJson.put("content", task.getContent());
         taskJson.put("checked", task.getChecked());
 
-        Util.taskListJson.put(taskJson);
+        Util.putTaskListJson(taskJson);
         Util.updateTaskJsonFile();
     }
 

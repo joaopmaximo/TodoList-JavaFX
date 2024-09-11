@@ -38,12 +38,12 @@ public class TaskController {
     public void deleteTask() throws IOException {
         // finding the task by the content
         int i = 0;
-        while (taskContent.getText() != Util.taskListJson.getJSONObject(i).get("content")) {
+        while (taskContent.getText() != Util.getTaskListJson().getJSONObject(i).get("content")) {
             i++;
         }
 
         // removing the task from the list, either json file and application ui
-        Util.taskListJson.remove(i);
+        Util.getTaskListJson().remove(i);
         mainController.deleteItemFromTaskList(i);
 
         // saving the list with the updated task to the json file
@@ -59,12 +59,12 @@ public class TaskController {
 
         // finding the task by the content
         int i = 0;
-        while (taskContent.getText() != Util.taskListJson.getJSONObject(i).get("content")) {
+        while (taskContent.getText() != Util.getTaskListJson().getJSONObject(i).get("content")) {
             i++;
         }
 
         // updating the checked attribute from the found task
-        Util.taskListJson.getJSONObject(i).put("checked", checkedBox.isSelected());
+        Util.getTaskListJson().getJSONObject(i).put("checked", checkedBox.isSelected());
 
         // saving the list with the updated task to the json file
         Util.updateTaskJsonFile();
