@@ -1,15 +1,18 @@
 package todoList.model;
 
 public class Task {
+    private int id;
     private String content;
     private Boolean checked;
 
-    public Task(String content, Boolean checked) {
+    public Task(int id ,String content, Boolean checked) {
+        this.id = id;
         this.content = content;
         this.checked = checked;
     }
 
-    public Task(String content) {
+    public Task(int id, String content) {
+        this.id = id;
         this.content = content;
         this.checked = false;
     }
@@ -31,6 +34,10 @@ public class Task {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }

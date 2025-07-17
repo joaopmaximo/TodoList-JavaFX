@@ -1,10 +1,9 @@
 package todoList.controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +13,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import todoList.model.Task;
-import todoList.util.Util;
 
 public class MainController {
+
+    private FileController fileController;
+    private JSONArray tasksListJson;
+    private int tasksCurrentId = 0;
 
     private double mouseX = 0;
     private double mouseY = 0;
@@ -32,52 +35,33 @@ public class MainController {
     @FXML
     private TextField newTaskField;
 
-    public void showConfig() {
-        System.out.println("testee");
-    }
-
-    public void getTasksPath() {
-        try {
-            if (Util.verifyTaskFile()) {
-                Util.taskListJson = new JSONArray();
-                return;
-            }
-        } catch (Exception e) {
-        }
+    public MainController() {
+        fileController = new FileController();
+        tasksListJson = new JSONArray();
     }
 
     // get all the persisted tasks in the json file to the app
     public void getTasks() {
         try {
-
-            if (Util.verifyTaskFile()) {
-                Util.setTaskListJson(new JSONArray());
-                return;
-            }
+            taskList.getChildren().clear();
 
             // get the content from the json file and put in a jsonArray
-            String fileContent = new String(Files.readAllBytes(Util.path), StandardCharsets.UTF_8);
-            Util.taskListJson = new JSONArray(fileContent);
+            tasksListJson = new JSONArray(fileController.getTasksFileContent());
 
             // for each jsonObject in the jsonArray, create a task in the application using
             // the FXML file
-            for (int i = 0; i < Util.taskListJson.length(); i++) {
-                JSONObject taskJson = new JSONObject(Util.taskListJson.getJSONObject(i).toMap());
-                Task task = new Task(taskJson.getString("content"), taskJson.getBoolean("checked"));
+            for (int i = 0; i < tasksListJson.length(); i++) {
+                if (tasksCurrentId < tasksListJson.getJSONObject(i).getInt("id")) {
+                    tasksCurrentId += tasksListJson.getJSONObject(i).getInt("id");
+                }
+
+                JSONObject taskJson = new JSONObject(tasksListJson.getJSONObject(i).toMap());
+                Task task = new Task(taskJson.getInt("id"), taskJson.getString("content"),
+                        taskJson.getBoolean("checked"));
                 addItemToTaskList(task);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return;
-
-            // if the json file is incorrect, creates a new one
-        } catch (JSONException e) {
-            try {
-                Util.taskListJson = new JSONArray();
-                Util.updateTaskJsonFile();
-            } catch (IOException io) {
-                io.printStackTrace();
-            }
         }
     }
 
@@ -92,9 +76,9 @@ public class MainController {
         // create a new task, uses a FXML file as template in the application. the task
         // will be saved into a json file
         try {
-            Task task = new Task(newTaskField.getText());
+            Task task = new Task(tasksCurrentId++, newTaskField.getText());
             addItemToTaskList(task);
-            saveTask(task);
+            saveTaskJson(task);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,14 +87,36 @@ public class MainController {
         newTaskField.clear();
     }
 
-    // saves the task in a json file, it uses the library org.json
-    public void saveTask(Task task) throws IOException {
+    public void deleteTask(int taskId) {
+        for (int i = tasksListJson.length() - 1; i >= 0; i--) {
+            if (taskId == tasksListJson.getJSONObject(i).getInt("id")) {
+                tasksListJson.remove(i);
+                taskList.getChildren().remove(i);
+                fileController.updateTasksFile(tasksListJson);
+                break;
+            }
+        }
+    }
+
+    public void toggleChecked(int taskId, boolean isSelected) {
+        for (int i = tasksListJson.length() - 1; i >= 0; i--) {
+            if (taskId == tasksListJson.getJSONObject(i).getInt("id")) {
+                tasksListJson.getJSONObject(i).put("checked", isSelected);
+                fileController.updateTasksFile(tasksListJson);
+                break;
+            }
+        }
+    }
+
+    // saves the task in json file, it uses the library org.json
+    public void saveTaskJson(Task task) throws IOException {
         JSONObject taskJson = new JSONObject();
+        taskJson.put("id", task.getId());
         taskJson.put("content", task.getContent());
         taskJson.put("checked", task.getChecked());
 
-        Util.putTaskListJson(taskJson);
-        Util.updateTaskJsonFile();
+        tasksListJson.put(taskJson);
+        fileController.updateTasksFile(tasksListJson);
     }
 
     public void addItemToTaskList(Task task) throws IOException {
@@ -122,20 +128,28 @@ public class MainController {
         taskList.getChildren().add(taskItem);
     }
 
-    public void deleteItemFromTaskList(int index) {
-        taskList.getChildren().remove(index);
-    }
-
     public void switchMode() {
-        Scene scene =  mainPane.getScene();
+        Scene scene = mainPane.getScene();
         String darkModeCss = getClass().getResource("/css/dark-mode.css").toExternalForm();
-        
-        if(scene.getStylesheets().size() > 1) {
+
+        if (scene.getStylesheets().size() > 1) {
             scene.getStylesheets().remove(darkModeCss);
             return;
         }
-        
+
         scene.getStylesheets().add(darkModeCss);
+    }
+
+    public void showConfig() {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Selecione o diretório");
+        chooser.setInitialDirectory(fileController.getDefaultTasksFilePath().toFile());
+        File directory = chooser.showDialog(mainPane.getScene().getWindow());
+
+        if (directory != null) {
+            fileController.setTasksFilePath(directory.toString());
+            getTasks();
+        }
     }
 
     public void closeProgram() {

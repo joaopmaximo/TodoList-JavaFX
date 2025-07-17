@@ -6,11 +6,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import todoList.model.Task;
-import todoList.util.Util;
 
 public class TaskController {
 
     private MainController mainController;
+
+    private int taskId;
 
     @FXML
     private HBox taskItem;
@@ -21,12 +22,14 @@ public class TaskController {
     @FXML
     private CheckBox checkedBox;
 
+
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
     // fill the FXML task template with the task data
     public void setData(Task task) {
+        this.taskId = task.getId();
         taskContent.setText(task.getContent());
 
         if (task.getChecked()) {
@@ -36,18 +39,7 @@ public class TaskController {
     }
 
     public void deleteTask() throws IOException {
-        // finding the task by the content
-        int i = 0;
-        while (taskContent.getText() != Util.getTaskListJson().getJSONObject(i).get("content")) {
-            i++;
-        }
-
-        // removing the task from the list, either json file and application ui
-        Util.getTaskListJson().remove(i);
-        mainController.deleteItemFromTaskList(i);
-
-        // saving the list with the updated task to the json file
-        Util.updateTaskJsonFile();
+        mainController.deleteTask(this.taskId);
     }
 
     public void toggleChecked() throws IOException {
@@ -57,17 +49,7 @@ public class TaskController {
             taskItem.getStyleClass().remove("disabled");
         }
 
-        // finding the task by the content
-        int i = 0;
-        while (taskContent.getText() != Util.getTaskListJson().getJSONObject(i).get("content")) {
-            i++;
-        }
-
-        // updating the checked attribute from the found task
-        Util.getTaskListJson().getJSONObject(i).put("checked", checkedBox.isSelected());
-
-        // saving the list with the updated task to the json file
-        Util.updateTaskJsonFile();
+        mainController.toggleChecked(this.taskId, checkedBox.isSelected());
     }
 
 }

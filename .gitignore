@@ -5,3 +5,4 @@ tasks.json
 dependency-reduced-pom.xml
 *.exe
 runtime/
+config.json
