@@ -22,7 +22,7 @@
                      <children>
                         <ImageView fitHeight="98.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@/img/lista.png" />
+                              <Image url="@../img/lista.png" />
                            </image>
                         </ImageView>
                         <Label id="title" text="Jeyp Todo List" />
@@ -33,12 +33,12 @@
                   </HBox>
                   <ImageView fx:id="switchModeButton" fitHeight="71.0" fitWidth="40.0" onMouseClicked="#switchMode" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
                      <image>
-                        <Image url="@/img/contrast.png" />
+                        <Image url="@../img/contrast.png" />
                      </image>
                   </ImageView>
                   <ImageView fx:id="configButton" fitHeight="71.0" fitWidth="40.0" onMouseClicked="#showConfig" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
                      <image>
-                        <Image url="@/img/folder-gear.png" />
+                        <Image url="@../img/folder-gear.png" />
                      </image>
                   </ImageView>
                </children>

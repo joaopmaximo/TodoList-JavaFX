@@ -12,22 +12,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class FileController {
-    private String appData;
-    private Path defaultTasksFilePath;
+    private static final String appData = System.getenv("APPDATA");
+    private static final Path configFilePath = Paths.get(appData, "todoList");
+    private static final Path defaultTasksFilePath = Paths.get(appData, "todoList");
     private File configFile;
     private JSONObject configJson;
     private File tasksFile;
 
     public FileController() {
-        appData = System.getenv("APPDATA");
-        defaultTasksFilePath = Paths.get(appData, "todoList");
         initConfigFile();
         initTasksFile();
     }
 
     private void initConfigFile() {
         try {
-            configFile = new File("config.json");
+            configFile = new File(configFilePath.toString().concat("\\config.json"));
             if (!configFile.isFile()) {
                 configFile.createNewFile();
                 configJson = new JSONObject();

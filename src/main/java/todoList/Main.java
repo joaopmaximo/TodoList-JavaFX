@@ -29,7 +29,7 @@ public class Main extends Application {
             scene.getStylesheets().add(darkModeCss);
             scene.setFill(Color.TRANSPARENT);
             
-            Image icon = new Image("/img/lista.png");
+            Image icon = new Image(getClass().getResource("/img/lista.png").toString());
             MainController mainController = loader.getController();
             mainController.getTasks();
 

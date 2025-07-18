@@ -4,21 +4,14 @@
 
 ## How to distribute the application using Jpackage
 
-Create a runtime image, ensure that JavaFX modules are included
+Generate a runtime image, ensure that all modules are included in the module-info.java. I used javafx maven plugin in this
 
 ```console
-jlink --module-path $Env:JAVA_HOME/jmods/javafx-jmods-17.0.12 --add-modules ALL-MODULE-PATH --output runtime
-```
-
-
-Package the application (using Maven in this case)
-
-```console
-mvn package
+mvn javafx:jlink
 ```
 
 Finally use Jpackage to create the installer
 
 ```console
-jpackage --main-jar TodoList-2.0.jar --runtime-image runtime/ --name TodoList --input target/ --icon src/main/resources/img/lista.ico --win-menu --win-shortcut
+jpackage --name todoList  --app-version 3.0 --module todoList/todoList.Main --runtime-image target/image --icon src/main/resources/img/lista.ico --win-menu --win-shortcut
 ```
