@@ -37,7 +37,6 @@ public class Main extends Application {
             stage.getIcons().add(icon);
             stage.setScene(scene);
             stage.setResizable(false);
-            stage.initStyle(StageStyle.TRANSPARENT);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

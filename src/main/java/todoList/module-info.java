@@ -4,6 +4,7 @@ module todoList {
     requires javafx.base;
     requires javafx.graphics;
     requires org.json;
+    requires java.desktop;
 
     exports todoList;
 

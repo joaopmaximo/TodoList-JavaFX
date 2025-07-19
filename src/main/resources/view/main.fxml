@@ -2,45 +2,31 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.MainController">
+<BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.MainController">
    <center>
       <VBox alignment="TOP_CENTER" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" spacing="30.0">
+            <HBox alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER_RIGHT" spacing="10.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <ImageView fitHeight="98.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/lista.png" />
-                           </image>
-                        </ImageView>
-                        <Label id="title" text="Jeyp Todo List" />
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </HBox>
-                  <ImageView fx:id="switchModeButton" fitHeight="71.0" fitWidth="40.0" onMouseClicked="#switchMode" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
+                  <ImageView fitHeight="98.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/contrast.png" />
+                        <Image url="@../img/lista.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="configButton" fitHeight="71.0" fitWidth="40.0" onMouseClicked="#showConfig" pickOnBounds="true" preserveRatio="true" styleClass="clickable">
-                     <image>
-                        <Image url="@../img/folder-gear.png" />
-                     </image>
-                  </ImageView>
+                  <Label id="title" text="Jeyp Todo List" />
                </children>
             </HBox>
             <HBox alignment="CENTER">
@@ -68,20 +54,21 @@
       </VBox>
    </center>
    <top>
-      <HBox id="topBar" alignment="CENTER_RIGHT" onMouseDragged="#moveWindow" onMousePressed="#getMouseLocation" prefHeight="30.0" styleClass="borderBar" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="minimizeButton" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#minimizeProgram" prefWidth="50.0" text="_" />
-            <Button fx:id="closeButton" layoutX="450.0" layoutY="10.0" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#closeProgram" prefWidth="50.0" text="X" />
-         </children>
-      </HBox>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Configurações">
+            <items>
+                  <CheckMenuItem fx:id="switchModeButton" mnemonicParsing="false" onAction="#switchMode" selected="true" text="Modo escuro" />
+                  <MenuItem fx:id="configButton" mnemonicParsing="false" onAction="#showConfig" text="Alterar diretório" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Sobre">
+               <items>
+                  <MenuItem fx:id="githubButton" mnemonicParsing="false" onAction="#openGithub" text="Github" />
+                  <MenuItem fx:id="linkedinButton" mnemonicParsing="false" onAction="#openLinkedin" text="Linkedin" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
    </top>
-   <bottom>
-      <HBox id="bottomBar" prefHeight="10.0" styleClass="borderBar" BorderPane.alignment="CENTER" />
-   </bottom>
-   <left>
-      <Pane prefWidth="5.0" styleClass="borderBar" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <Pane prefWidth="5.0" styleClass="borderBar" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>

@@ -2,6 +2,7 @@ package todoList.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import todoList.model.Task;
+
+import java.awt.Desktop;
 
 public class MainController {
 
@@ -152,14 +155,20 @@ public class MainController {
         }
     }
 
-    public void closeProgram() {
-        Stage stage = (Stage) mainPane.getScene().getWindow();
-        stage.close();
+    public void openGithub() {
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/joaopmaximo"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void minimizeProgram() {
-        Stage stage = (Stage) mainPane.getScene().getWindow();
-        stage.setIconified(true);
+    public void openLinkedin() {
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/joao-pedro-maximo-da-silva/"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void getMouseLocation(MouseEvent e) {

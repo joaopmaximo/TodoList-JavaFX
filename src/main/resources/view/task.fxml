@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox fx:id="taskItem" alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" prefWidth="400.0" spacing="14.0" styleClass="taskItem" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.TaskController">
+<HBox fx:id="taskItem" alignment="CENTER_LEFT" maxWidth="-Infinity" minHeight="40.0" minWidth="-Infinity" prefWidth="400.0" spacing="14.0" styleClass="taskItem" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.TaskController">
    <children>
       <Label fx:id="taskContent" prefWidth="260.0" text="Tarefa" wrapText="true" HBox.hgrow="ALWAYS">
          <HBox.margin>
