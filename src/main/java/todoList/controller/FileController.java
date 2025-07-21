@@ -30,7 +30,7 @@ public class FileController {
             defaultPath = Paths.get(appData, "todoList");
         } else {
             final String userHome = System.getProperty("user.home");
-            defaultPath = Paths.get(userHome, ".todoList");
+            defaultPath = Paths.get(userHome, ".config", "todoList");
         }
     }
 
@@ -42,22 +42,24 @@ public class FileController {
 
     private void initConfigFile() {
         try {
-            configFile = new File(defaultPath.toString().concat("\\config.json"));
-            if (!configFile.isFile()) {
-                configFile.createNewFile();
-                configJson = new JSONObject();
+            this.configFile = new File(defaultPath.resolve("config.json").toString());
+            if (!this.configFile.isFile()) {
+                // creates the directory and the file
+                this.configFile.getParentFile().mkdirs();
+                this.configFile.createNewFile();
+                this.configJson = new JSONObject();
 
-                configJson.put("tasksFilePath", defaultPath.toString());
-                configJson.put("mainColor", defaultMainColor);
+                this.configJson.put("tasksFilePath", defaultPath.toString());
+                this.configJson.put("mainColor", defaultMainColor);
 
-                Files.writeString(configFile.toPath(), configJson.toString(4));
+                Files.writeString(this.configFile.toPath(), this.configJson.toString(4));
 
                 return;
             }
 
-            String fileContent = new String(Files.readAllBytes(configFile.toPath()));
+            String fileContent = new String(Files.readAllBytes(this.configFile.toPath()));
 
-            configJson = new JSONObject(fileContent);
+            this.configJson = new JSONObject(fileContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,11 +67,12 @@ public class FileController {
 
     private void initTasksFile() {
         try {
-            tasksFile = new File(configJson.getString("tasksFilePath").concat("\\tasks.json"));
-            if (!tasksFile.isFile()) {
+            this.tasksFile = new File(
+                    Paths.get(this.configJson.getString("tasksFilePath")).resolve("tasks.json").toString());
+            if (!this.tasksFile.isFile()) {
                 // creates the directory and the file
-                tasksFile.getParentFile().mkdirs();
-                tasksFile.createNewFile();
+                this.tasksFile.getParentFile().mkdirs();
+                this.tasksFile.createNewFile();
                 updateTasksFile(new JSONArray());
             }
         } catch (IOException e) {
@@ -79,15 +82,15 @@ public class FileController {
 
     private void initMainColorFile() {
         try {
-            mainColorFile = new File(defaultPath.toString().concat("\\mainColor.css"));
-            if (!mainColorFile.isFile()) {
+            this.mainColorFile = new File(defaultPath.resolve("mainColor.css").toString());
+            if (!this.mainColorFile.isFile()) {
                 String cssDefaultContent = "* {\n" + "    -fx-main-color: " + defaultMainColor + ";\n}";
 
                 // creates the directory and the file
-                mainColorFile.getParentFile().mkdirs();
-                mainColorFile.createNewFile();
+                this.mainColorFile.getParentFile().mkdirs();
+                this.mainColorFile.createNewFile();
 
-                Files.writeString(mainColorFile.toPath(), cssDefaultContent);
+                Files.writeString(this.mainColorFile.toPath(), cssDefaultContent);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,7 +99,7 @@ public class FileController {
 
     public void updateTasksFile(JSONArray tasksListJson) {
         try {
-            FileWriter fileWriter = new FileWriter(tasksFile, StandardCharsets.UTF_8);
+            FileWriter fileWriter = new FileWriter(this.tasksFile, StandardCharsets.UTF_8);
             fileWriter.write(tasksListJson.toString(4));
             fileWriter.close();
         } catch (IOException e) {
@@ -113,11 +116,11 @@ public class FileController {
     }
 
     public File getTasksFile() {
-        return tasksFile;
+        return this.tasksFile;
     }
 
     public String getTasksFileContent() throws IOException {
-        String fileContent = new String(Files.readAllBytes(tasksFile.toPath()), StandardCharsets.UTF_8);
+        String fileContent = new String(Files.readAllBytes(this.tasksFile.toPath()), StandardCharsets.UTF_8);
         return fileContent;
     }
 
@@ -136,7 +139,7 @@ public class FileController {
         String cssNewContent = "* {\n" + "    -fx-main-color: " + newColor + ";\n}";
 
         try {
-            Files.writeString(mainColorFile.toPath(), cssNewContent);
+            Files.writeString(this.mainColorFile.toPath(), cssNewContent);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -159,10 +162,10 @@ public class FileController {
     }
 
     public Path getMainColorFilePath() {
-        return mainColorFile.toPath();
+        return this.mainColorFile.toPath();
     }
 
     public String getMainColor() {
-        return configJson.getString("mainColor");
+        return this.configJson.getString("mainColor");
     }
 }
