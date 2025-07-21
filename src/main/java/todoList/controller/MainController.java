@@ -9,11 +9,14 @@ import org.json.JSONObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import todoList.model.Task;
@@ -25,9 +28,6 @@ public class MainController {
     private FileController fileController;
     private JSONArray tasksListJson;
     private int tasksCurrentId = 0;
-
-    private double mouseX = 0;
-    private double mouseY = 0;
 
     @FXML
     private BorderPane mainPane;
@@ -133,9 +133,9 @@ public class MainController {
 
     public void switchMode() {
         Scene scene = mainPane.getScene();
-        String darkModeCss = getClass().getResource("/css/dark-mode.css").toExternalForm();
+        String darkModeCss = fileController.getDarkModeStyleFilePath();
 
-        if (scene.getStylesheets().size() > 1) {
+        if (scene.getStylesheets().contains(darkModeCss)) {
             scene.getStylesheets().remove(darkModeCss);
             return;
         }
@@ -146,7 +146,7 @@ public class MainController {
     public void showConfig() {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Selecione o diretório");
-        chooser.setInitialDirectory(fileController.getDefaultTasksFilePath().toFile());
+        chooser.setInitialDirectory(fileController.getdefaultPath().toFile());
         File directory = chooser.showDialog(mainPane.getScene().getWindow());
 
         if (directory != null) {
@@ -171,15 +171,48 @@ public class MainController {
         }
     }
 
-    public void getMouseLocation(MouseEvent e) {
-        mouseX = e.getSceneX();
-        mouseY = e.getSceneY();
-    }
+    public void changeColor() {
+        Color mainColor = Color.web(fileController.getMainColor());
+        String mainColorHex = fileController.getMainColor();
+        String mainColorCss = fileController.getMainColorFilePath().toUri().toString();
 
-    public void moveWindow(MouseEvent e) {
-        Stage stage = (Stage) mainPane.getScene().getWindow();
-        stage.setX(e.getScreenX() - mouseX);
-        stage.setY(e.getScreenY() - mouseY);
-    }
+        Stage colorPickerStage = new Stage();
+        ColorPicker colorPicker = new ColorPicker(mainColor);
 
+        StackPane root = new StackPane(colorPicker);
+
+        Scene scene = new Scene(root, 400, 50);
+        Image icon = new Image(fileController.getIconFilePath());
+
+        colorPicker.setOnAction(e -> {
+            Color newColor = colorPicker.getValue();
+
+            // converting to hex values, so the css can read
+            String newColorHex = String.format("#%02X%02X%02X",
+                    (int) (newColor.getRed() * 255),
+                    (int) (newColor.getGreen() * 255),
+                    (int) (newColor.getBlue() * 255));
+
+            fileController.setMainColor(newColorHex);
+
+            // updating the scene styles
+            mainPane.getScene().getStylesheets().remove(mainColorCss);
+            mainPane.getScene().getStylesheets().add(mainColorCss);
+
+            // getting the main color and filling the window after changing
+            root.setStyle("-fx-background-color: " + newColorHex);
+            colorPicker.setStyle("-fx-color-label-visible: false; -fx-background-color: " + newColorHex);
+        });
+
+        // getting the main color and filling the window before change anything
+        root.setStyle("-fx-background-color: " + mainColorHex);
+        colorPicker.setStyle("-fx-color-label-visible: false; -fx-background-color: " + mainColorHex);
+
+        colorPickerStage.setTitle("Selecionar cor");
+        colorPickerStage.setScene(scene);
+        colorPickerStage.getIcons().add(icon);
+        colorPickerStage.setResizable(false);
+        colorPickerStage.show();
+
+    }
 }

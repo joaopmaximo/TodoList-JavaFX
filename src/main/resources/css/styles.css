@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Oswald';
-    src: url('../font/oswald.ttf');
+    font-family: 'Roboto Regular';
+    src: url('../font/roboto-regular.ttf');
 }
 
 @font-face {
@@ -8,16 +8,39 @@
     src: url('../font/roboto-condensed.ttf');
 }
 
+@font-face {
+    font-family: 'Roboto Black';
+    src: url('../font/roboto-black.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Light';
+    src: url('../font/roboto-light.ttf');
+}
+
+* {
+    -fx-main-color: #0455BF;
+    -fx-secondary-color: #505050;
+    -fx-tertiary-color: #f9f9f9;
+    -fx-menu-bar-background-color: #f8f8f8;
+    -fx-menu-border-color: #dadada;
+    -fx-menu-focused-color: #f0f0f0;
+}
+
+.label {
+    -fx-text-fill: -fx-secondary-color;
+}
+
 .button {
-    -fx-text-fill: #fff;
+    -fx-text-fill: -fx-tertiary-color;
     -fx-cursor: hand;
-    -fx-font-family: "Roboto Condensed";
 }
 
 .text-field {
-    -fx-border-width: 2px;
-    -fx-border-color: #3BBFA7;
+    -fx-border-width: 0 0 1.5px 0;
+    -fx-border-color: -fx-main-color;
     -fx-font-size: 16px;
+    -fx-text-fill: -fx-secondary-color;
 }
 
 .scroll-pane,
@@ -33,7 +56,7 @@
 .button,
 .scroll-bar .thumb,
 .borderBar {
-    -fx-background-color: #3BBFA7;
+    -fx-background-color: -fx-main-color;
 }
 
 .scroll-bar .thumb:hover {
@@ -41,60 +64,54 @@
 }
 
 .check-box .box {
-    -fx-border-color: #3BBFA7;
+    -fx-border-radius: 5px;
+    -fx-border-color: -fx-main-color;
     -fx-border-width: 2px;
+    -fx-cursor: hand;
 }
 
-.check-box .box:hover {
+.check-box .box:hover, .button:hover {
     -fx-opacity: 0.8;
 }
 
+.check-box .box:checked {
+    -fx-background-color: -fx-main-color;
+}
+
 #mainPane {
-    -fx-background-color: #fff;
+    -fx-background-color: -fx-tertiary-color;
 }
 
 #title {
-    -fx-font-family: "Oswald";
+    -fx-font-family: "Roboto Black";
     -fx-font-size: 30px;
+    -fx-text-fill: -fx-secondary-color;
 }
 
 #addButton {
-    -fx-font-size: 30px;
-    -fx-padding: 0 0;
-    -fx-font-weight: bold;
-    -fx-background-radius: 0 2 2 0;
+    -fx-font-size: 40px;
+    -fx-padding: -4px 10px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-font-family: "Roboto Light";
+    -fx-text-fill: #fff;
 }
 
 #deleteButton {
+    -fx-padding: 0;
     -fx-background-color: transparent;
-    -fx-border-width: 2px;
-    -fx-border-radius: 100%;
-    -fx-background-radius: 100%;
-    -fx-border-color: #3BBFA7;
-    -fx-text-fill: #3BBFA7;
-    -fx-font-size: 12px;
-}
-
-#deleteButton:hover {
-    -fx-text-fill: #fff;
-    -fx-background-color: #3BBFA7;
-}
-
-#addButton:hover {
-    -fx-background-color: #fff;
-    -fx-text-fill: #3BBFA7;
+    -fx-text-fill: -fx-secondary-color;
+    -fx-font-size: 20px;
+    -fx-font-family: "Roboto Regular";
 }
 
 .taskItem {
     -fx-border-width: 2px;
-    -fx-border-color: #3BBFA7;
-    -fx-border-radius: 5px;
+    -fx-border-color: -fx-main-color;
+    -fx-border-radius: 10px;
     -fx-font-size: 16px;
     -fx-font-family: "Roboto Condensed";
-}
-
-.clickable {
-    -fx-cursor: hand;
 }
 
 .disabled {
@@ -106,8 +123,10 @@
 }
 
 .menu-bar {
-    -fx-background-color: #221a38;
-    -fx-padding: 0;
+    -fx-background-color: -fx-menu-bar-background-color;
+    -fx-padding: 2px 0;
+    -fx-border-width: 1px 0;
+    -fx-border-color: -fx-menu-border-color;
 }
 
 .menu-bar .menu,
@@ -119,18 +138,18 @@
 
 .menu-bar .menu .label,
 .menu-bar .menu .menu-item .label {
-    -fx-text-fill: #fff;
+    -fx-text-fill: -fx-secondary-color;
 }
 
 .menu-bar .menu:hover,
 .menu-bar .menu .menu-item:hover,
 .menu-bar .menu:showing,
 .menu-bar .menu .menu-item:focused {
-    -fx-background-color: #ffffff1e;
+    -fx-background-color: -fx-menu-focused-color;
 }
 
 .menu-bar .menu .context-menu {
-    -fx-background-color: #2c2c2c;
+    -fx-background-color: -fx-tertiary-color;
     -fx-padding: 5px 2px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
@@ -139,5 +158,5 @@
 .check,
 .check-box:selected .mark {
     -fx-shape: "M17.0303 8.78039L8.99993 16.8107L5.4696 13.2804L6.53026 12.2197L8.99993 14.6894L15.9696 7.71973L17.0303 8.78039Z";
-    -fx-background-color: #fff;
+    -fx-background-color: -fx-secondary-color;
 }

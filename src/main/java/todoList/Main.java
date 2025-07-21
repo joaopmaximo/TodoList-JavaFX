@@ -5,9 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import todoList.controller.FileController;
 import todoList.controller.MainController;
 
 public class Main extends Application {
@@ -22,18 +21,21 @@ public class Main extends Application {
             Parent root = loader.load(); // root node, required by scene
             Scene scene = new Scene(root); // scene, required by stage
 
-            String stylesCss = getClass().getResource("/css/styles.css").toExternalForm();
-            String darkModeCss = getClass().getResource("/css/dark-mode.css").toExternalForm();
+            FileController fileController = new FileController();
+
+            String stylesCss = fileController.getStyleFilePath();
+            String darkModeCss = fileController.getDarkModeStyleFilePath();
+            String mainColorCss = fileController.getMainColorFilePath().toUri().toString();
 
             scene.getStylesheets().add(stylesCss);
             scene.getStylesheets().add(darkModeCss);
-            scene.setFill(Color.TRANSPARENT);
+            scene.getStylesheets().add(mainColorCss);
             
-            Image icon = new Image(getClass().getResource("/img/lista.png").toString());
+            Image icon = new Image(fileController.getIconFilePath());
             MainController mainController = loader.getController();
             mainController.getTasks();
 
-            stage.setTitle("Jeyp ToDo List");
+            stage.setTitle("To Do List");
             stage.getIcons().add(icon);
             stage.setScene(scene);
             stage.setResizable(false);

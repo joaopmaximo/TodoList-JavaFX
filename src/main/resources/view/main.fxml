@@ -9,34 +9,23 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="mainPane" xmlns="http://javafx.com/javafx/21.0.8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="todoList.controller.MainController">
    <center>
-      <VBox alignment="TOP_CENTER" spacing="30.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER_LEFT">
                <children>
-                  <ImageView fitHeight="98.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/lista.png" />
-                     </image>
-                  </ImageView>
-                  <Label id="title" text="Jeyp Todo List" />
+                  <Label id="title" text="To Do List" />
                </children>
             </HBox>
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" fillHeight="false" spacing="20.0">
                <children>
-                  <TextField fx:id="newTaskField" onAction="#addTask" prefHeight="40.0" prefWidth="380.0">
-                     <HBox.margin>
-                        <Insets right="-2.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#addTask" prefHeight="40.0" prefWidth="50.0" text="+" />
+                  <TextField fx:id="newTaskField" onAction="#addTask" prefHeight="40.0" prefWidth="340.0" promptText="Adicionar nova tarefa" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="addButton" alignment="CENTER" mnemonicParsing="false" onAction="#addTask" text="+" />
                </children>
             </HBox>
             <ScrollPane hbarPolicy="NEVER" prefHeight="350.0" prefWidth="430.0">
@@ -60,6 +49,7 @@
             <items>
                   <CheckMenuItem fx:id="switchModeButton" mnemonicParsing="false" onAction="#switchMode" selected="true" text="Modo escuro" />
                   <MenuItem fx:id="configButton" mnemonicParsing="false" onAction="#showConfig" text="Alterar diretório" />
+                  <MenuItem fx:id="colorButton" mnemonicParsing="false" onAction="#changeColor" text="Alterar cor" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Sobre">
