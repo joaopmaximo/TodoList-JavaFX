@@ -12,8 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class FileController {
-    private static final String appData = System.getenv("APPDATA");
-    private static final Path defaultPath = Paths.get(appData, "todoList");
+    private static final String os = System.getProperty("os.name").toLowerCase();
+    private static final Path defaultPath;
     private static final String defaultMainColor = "#0455BF";
     private final String styleFilePath = getClass().getResource("/css/styles.css").toExternalForm();
     private final String darkModeStyleFilePath = getClass().getResource("/css/dark-mode.css").toExternalForm();
@@ -22,6 +22,17 @@ public class FileController {
     private JSONObject configJson;
     private File tasksFile;
     private File mainColorFile;
+
+    // adjust the main directory according to the OS
+    static {
+        if (os.contains("win")) {
+            final String appData = System.getenv("APPDATA");
+            defaultPath = Paths.get(appData, "todoList");
+        } else {
+            final String userHome = System.getProperty("user.home");
+            defaultPath = Paths.get(userHome, ".todoList");
+        }
+    }
 
     public FileController() {
         initConfigFile();
