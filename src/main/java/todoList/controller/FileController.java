@@ -7,9 +7,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import todoList.util.LogConfig;
 
 public class FileController {
     private static final String os = System.getProperty("os.name").toLowerCase();
@@ -22,6 +25,7 @@ public class FileController {
     private JSONObject configJson;
     private File tasksFile;
     private File mainColorFile;
+    private static final Logger logger = LogConfig.getLogger();
 
     // adjust the main directory according to the OS
     static {
@@ -61,7 +65,7 @@ public class FileController {
 
             this.configJson = new JSONObject(fileContent);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 
@@ -76,7 +80,7 @@ public class FileController {
                 updateTasksFile(new JSONArray());
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 
@@ -93,7 +97,7 @@ public class FileController {
                 Files.writeString(this.mainColorFile.toPath(), cssDefaultContent);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 
@@ -103,7 +107,7 @@ public class FileController {
             fileWriter.write(tasksListJson.toString(4));
             fileWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 
@@ -111,7 +115,7 @@ public class FileController {
         try {
             Files.writeString(configFile.toPath(), configJson.toString(4));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 
@@ -141,7 +145,7 @@ public class FileController {
         try {
             Files.writeString(this.mainColorFile.toPath(), cssNewContent);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 

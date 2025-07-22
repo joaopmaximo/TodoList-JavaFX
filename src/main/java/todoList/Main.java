@@ -1,5 +1,7 @@
 package todoList;
 
+import java.util.logging.*;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,8 +10,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import todoList.controller.FileController;
 import todoList.controller.MainController;
+import todoList.util.LogConfig;
 
 public class Main extends Application {
+    private static final Logger logger = LogConfig.getLogger();
     public static void main(String[] args) {
         launch(args);
     }
@@ -41,7 +45,7 @@ public class Main extends Application {
             stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 

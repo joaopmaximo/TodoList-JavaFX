@@ -3,6 +3,7 @@ package todoList.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.logging.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import todoList.model.Task;
+import todoList.util.LogConfig;
 
 import java.awt.Desktop;
 
@@ -28,6 +30,7 @@ public class MainController {
     private FileController fileController;
     private JSONArray tasksListJson;
     private int tasksCurrentId = 0;
+    private static final Logger logger = LogConfig.getLogger();
 
     @FXML
     private BorderPane mainPane;
@@ -64,7 +67,7 @@ public class MainController {
                 addItemToTaskList(task);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 
@@ -83,7 +86,7 @@ public class MainController {
             addItemToTaskList(task);
             saveTaskJson(task);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
 
         // cleans the textField for the next input
@@ -158,16 +161,16 @@ public class MainController {
     public void openGithub() {
         try {
             Desktop.getDesktop().browse(new URI("https://github.com/joaopmaximo"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 
     public void openLinkedin() {
         try {
             Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/joao-pedro-maximo-da-silva/"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Erro inesperado", e);
         }
     }
 
