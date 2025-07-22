@@ -118,7 +118,7 @@
     -fx-opacity: 0.5;
 }
 
-.disabled .text {
+.disabled .label .text {
     -fx-strikethrough: true;
 }
 

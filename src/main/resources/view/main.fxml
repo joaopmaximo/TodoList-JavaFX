@@ -47,7 +47,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Configurações">
             <items>
-                  <CheckMenuItem fx:id="switchModeButton" mnemonicParsing="false" onAction="#switchMode" selected="true" text="Modo escuro" />
+                  <CheckMenuItem fx:id="switchModeButton" mnemonicParsing="false" onAction="#switchMode" text="Modo escuro" />
                   <MenuItem fx:id="configButton" mnemonicParsing="false" onAction="#showConfig" text="Alterar diretório" />
                   <MenuItem fx:id="colorButton" mnemonicParsing="false" onAction="#changeColor" text="Alterar cor" />
             </items>

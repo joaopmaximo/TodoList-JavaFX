@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,6 +18,7 @@ public class FileController {
     private static final String os = System.getProperty("os.name").toLowerCase();
     private static final Path defaultPath;
     private static final String defaultMainColor = "#0455BF";
+    private static final String defaultColorMode = "light";
     private final String styleFilePath = getClass().getResource("/css/styles.css").toExternalForm();
     private final String darkModeStyleFilePath = getClass().getResource("/css/dark-mode.css").toExternalForm();
     private final String iconFilePath = getClass().getResource("/img/lista.png").toString();
@@ -52,6 +54,7 @@ public class FileController {
                 this.configJson = new JSONObject();
 
                 this.configJson.put("tasksFilePath", defaultPath.toString());
+                this.configJson.put("colorMode", defaultColorMode);
                 this.configJson.put("mainColor", defaultMainColor);
 
                 Files.writeString(this.configFile.toPath(), this.configJson.toString(4));
@@ -93,6 +96,16 @@ public class FileController {
                 this.mainColorFile.createNewFile();
 
                 Files.writeString(this.mainColorFile.toPath(), cssDefaultContent);
+            }
+        } catch (IOException e) {
+            LogConfig.logAndShowError("Erro nos arquivos", e);
+        }
+    }
+
+    public static void resetFiles() {
+        try (DirectoryStream<Path> entries = Files.newDirectoryStream(FileController.defaultPath)) {
+            for (Path entry : entries) {
+                Files.delete(entry);
             }
         } catch (IOException e) {
             LogConfig.logAndShowError("Erro nos arquivos", e);
@@ -147,6 +160,12 @@ public class FileController {
         }
     }
 
+    public void setColorMode(String colorMode) {
+        this.configJson.remove("colorMode");
+        this.configJson.put("colorMode", colorMode);
+        updateConfigFile(this.configJson);
+    }
+
     public Path getdefaultPath() {
         return defaultPath;
     }
@@ -163,11 +182,15 @@ public class FileController {
         return iconFilePath;
     }
 
-    public Path getMainColorFilePath() {
-        return this.mainColorFile.toPath();
+    public String getMainColorFilePath() {
+        return this.mainColorFile.toPath().toUri().toString();
     }
 
     public String getMainColor() {
         return this.configJson.getString("mainColor");
+    }
+
+    public String getColorMode() {
+        return this.configJson.getString("colorMode");
     }
 }

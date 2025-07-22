@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -39,6 +40,9 @@ public class MainController {
     @FXML
     private TextField newTaskField;
 
+    @FXML
+    private CheckMenuItem switchModeButton;
+
     public MainController() {
         fileController = new FileController();
         tasksListJson = new JSONArray();
@@ -66,6 +70,25 @@ public class MainController {
             }
         } catch (IOException e) {
             LogConfig.logAndShowError("Erro nas tasks", e);
+        }
+    }
+
+    public void initColorMode() {
+        Scene scene = mainPane.getScene();
+        String stylesCss = fileController.getStyleFilePath();
+        String mainColorCss = fileController.getMainColorFilePath();
+
+        scene.getStylesheets().add(stylesCss);
+        scene.getStylesheets().add(mainColorCss);
+
+        if (fileController.getColorMode().equals("dark")) {
+            switchModeButton.setSelected(true);
+
+            String darkModeCss = fileController.getDarkModeStyleFilePath();
+
+            if (!scene.getStylesheets().contains(darkModeCss)) {
+                scene.getStylesheets().add(darkModeCss);
+            }
         }
     }
 
@@ -136,12 +159,21 @@ public class MainController {
         Scene scene = mainPane.getScene();
         String darkModeCss = fileController.getDarkModeStyleFilePath();
 
-        if (scene.getStylesheets().contains(darkModeCss)) {
-            scene.getStylesheets().remove(darkModeCss);
+        if (fileController.getColorMode().equals("dark")) {
+            fileController.setColorMode("light");
+
+            if (scene.getStylesheets().contains(darkModeCss)) {
+                scene.getStylesheets().remove(darkModeCss);
+            }
+
             return;
         }
 
-        scene.getStylesheets().add(darkModeCss);
+        fileController.setColorMode("dark");
+
+        if (!scene.getStylesheets().contains(darkModeCss)) {
+            scene.getStylesheets().add(darkModeCss);
+        }
     }
 
     public void showConfig() {
@@ -175,7 +207,7 @@ public class MainController {
     public void changeColor() {
         Color mainColor = Color.web(fileController.getMainColor());
         String mainColorHex = fileController.getMainColor();
-        String mainColorCss = fileController.getMainColorFilePath().toUri().toString();
+        String mainColorCss = fileController.getMainColorFilePath();
 
         Stage colorPickerStage = new Stage();
         ColorPicker colorPicker = new ColorPicker(mainColor);

@@ -17,23 +17,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
             Parent root = loader.load(); // root node, required by scene
             Scene scene = new Scene(root); // scene, required by stage
-
+            
             FileController fileController = new FileController();
 
-            String stylesCss = fileController.getStyleFilePath();
-            String darkModeCss = fileController.getDarkModeStyleFilePath();
-            String mainColorCss = fileController.getMainColorFilePath().toUri().toString();
-
-            scene.getStylesheets().add(stylesCss);
-            scene.getStylesheets().add(darkModeCss);
-            scene.getStylesheets().add(mainColorCss);
-            
             Image icon = new Image(fileController.getIconFilePath());
+
             MainController mainController = loader.getController();
+            mainController.initColorMode();
             mainController.getTasks();
 
             stage.setTitle("To Do List");
@@ -42,6 +37,7 @@ public class Main extends Application {
             stage.setResizable(false);
             stage.show();
         } catch (Exception e) {
+            FileController.resetFiles();
             LogConfig.logAndShowError("Erro ao iniciar", e);
         }
     }
