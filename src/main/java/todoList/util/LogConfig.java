@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.*;
 
+import javafx.scene.control.Alert;
+
 public class LogConfig {
     private static final String os = System.getProperty("os.name").toLowerCase();
     private static final Path defaultPath;
@@ -35,6 +37,18 @@ public class LogConfig {
             }
         }
         return logger;
+    }
+
+    public static void logAndShowError(String userMessage, Exception e) {
+        Logger log = getLogger();
+        log.log(Level.SEVERE, userMessage, e);
+
+        // Mostrar alerta no JavaFX
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText("Ocorreu um erro");
+        alert.setContentText(userMessage);
+        alert.showAndWait();
     }
 
 }

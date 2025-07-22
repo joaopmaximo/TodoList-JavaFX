@@ -3,7 +3,6 @@ package todoList.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.util.logging.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,7 +29,6 @@ public class MainController {
     private FileController fileController;
     private JSONArray tasksListJson;
     private int tasksCurrentId = 0;
-    private static final Logger logger = LogConfig.getLogger();
 
     @FXML
     private BorderPane mainPane;
@@ -67,7 +65,7 @@ public class MainController {
                 addItemToTaskList(task);
             }
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Erro inesperado", e);
+            LogConfig.logAndShowError("Erro nas tasks", e);
         }
     }
 
@@ -86,7 +84,7 @@ public class MainController {
             addItemToTaskList(task);
             saveTaskJson(task);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Erro inesperado", e);
+            LogConfig.logAndShowError("Erro nas tasks", e);
         }
 
         // cleans the textField for the next input
@@ -162,7 +160,7 @@ public class MainController {
         try {
             Desktop.getDesktop().browse(new URI("https://github.com/joaopmaximo"));
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Erro inesperado", e);
+            LogConfig.logAndShowError("Erro nas tasks", e);
         }
     }
 
@@ -170,7 +168,7 @@ public class MainController {
         try {
             Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/joao-pedro-maximo-da-silva/"));
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Erro inesperado", e);
+            LogConfig.logAndShowError("Erro nas tasks", e);
         }
     }
 
